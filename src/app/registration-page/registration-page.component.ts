@@ -11,7 +11,9 @@ export class RegistrationPageComponent {
   public error: any;
   constructor(public afService: AuthService, private router: Router) { }
 	
-	//registers the user and logs them in
+  /**
+  * Registers the user, save attributes and logs them in
+  */
   register(event, name, lastName, age, gender, email, password) {
     event.preventDefault();
     this.afService.registerUser(email, password).then((user) => {

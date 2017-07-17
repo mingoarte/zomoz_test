@@ -10,13 +10,21 @@ import {Router} from "@angular/router";
 export class LoginPageComponent {
   public error: any;
   constructor(public afService: AuthService, private router: Router) {}
+  
+  /**
+  * Calls afService.loginWithGoogle() to log in a user.
+  * Then send them to the homepage 
+  */
   login() {
     this.afService.loginWithGoogle().then((data) => {
-      // Send them to the homepage if they are logged in
       this.router.navigate(['']);
     })
   }
 
+  /**
+  * Calls afService.loginWithEmail() to log in a user.
+  * Then send them to the homepage 
+  */
   loginWithEmail(event, email, password){
     event.preventDefault();
     this.afService.loginWithEmail(email, password).then(() => {

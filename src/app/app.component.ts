@@ -16,46 +16,49 @@ export class AppComponent implements OnInit {
   user = null;
   topics: FirebaseListObservable<any[]>;
   
-constructor(
-    public auth: AuthService,
-    public db: AngularFireDatabase,
-    private router: Router) {
-    // This asynchronously checks if our user is logged it and will automatically
-    // redirect them to the Login page when the status changes.
-    // This is just a small thing that Firebase does that makes it easy to use.
-    this.auth.getAuthState().subscribe(
-      (auth) => {
-        if(auth == null) {
-          console.log("Not Logged in.");
-          this.router.navigate(['login']);
-          this.isLoggedIn = false;
-        }
-        else {
-          console.log("Successfully Logged in.");
+	constructor(
+	    public auth: AuthService,
+	    public db: AngularFireDatabase,
+	    private router: Router) {
+		/**
+	    * This asynchronously checks if our user is logged it and will automatically
+	    * redirect them to the Login page when the status changes.
+	    */
+	    this.auth.getAuthState().subscribe(
+	      (auth) => {
+	        if(auth == null) {
+	          this.router.navigate(['login']);
+	          this.isLoggedIn = false;
+	        }
+	        else {
+	          this.isLoggedIn = true;
+	          this.router.navigate(['']);
+	        }
+	      }
+	    );
+	  }
 
+	/**
+	* Calls the AngularFire2 service to log in user with Google's credentials
+	*/
+	loginWithGoogle() {
+	    this.auth.loginWithGoogle();
+	  }
 
-          this.isLoggedIn = true;
-          // UPDATE: I forgot this at first. Without it when a user is logged in and goes directly to /login
-          // the user did not get redirected to the home page.
-          this.router.navigate(['']);
-        }
-      }
-    );
-  }
+	/**
+	* Calls the AngularFire2 service to register a log out user
+	*/
+	logout() {
+	this.auth.logout();
+	}
 
-loginWithGoogle() {
-    this.auth.loginWithGoogle();
-  }
+	/**
+	* This method is executed at the beginning of the component.
+	*/  
 
- logout() {
-    this.auth.logout();
-  }
-
-  
-
-ngOnInit() {
-    this.auth.getAuthState().subscribe(
-    	(user) => this.user = user);
-    	this.topics = this.db.list('/topics');
-  }
+	ngOnInit() {
+	    this.auth.getAuthState().subscribe(
+	    	(user) => this.user = user);
+	    	this.topics = this.db.list('/topics');
+	  }
 }

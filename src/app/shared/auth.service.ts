@@ -33,20 +33,26 @@ constructor(public afAuth: AngularFireAuth) {
   getAuthState() {
     return this.authState;
   }
+
+  /**
+   * Calls the AngularFire2 service to log in user with Google's credentials
+   */
   loginWithGoogle() {
     return this.afAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider());
   }
 
+
+  /**
+   * Calls the AngularFire2 service to register a log out user
+   */
   logout() {
      return this.afAuth.auth.signOut();
   }
 
 
-/**
+  /**
    * Calls the AngularFire2 service to register a new user
-   * @param model
-   * @returns {firebase.Promise<void>}
    */
   registerUser(email, password) {
     console.log(email)
@@ -54,9 +60,6 @@ constructor(public afAuth: AngularFireAuth) {
   }
   /**
    * Saves information to display to screen when user is logged in
-   * @param uid
-   * @param model
-   * @returns {firebase.Promise<void>}
    */
   saveUserInfoFromForm(uid, name, lastName, age, gender, email) {
     return FbApp.database().ref('registeredUsers/' + uid).set({
@@ -68,6 +71,9 @@ constructor(public afAuth: AngularFireAuth) {
     });
   }
 
+  /**
+   * Query all users and push them to users list.
+   */
   getAllUsers(){
     var db = FbApp.database().ref('registeredUsers/');
     var users = []
@@ -77,10 +83,16 @@ constructor(public afAuth: AngularFireAuth) {
     return users
   }
 
+  /**
+   * Delete a user by id.
+   */
   deleteUser(id){
     return FbApp.database().ref('registeredUsers/'+id).remove();
   }
 
+  /**
+   * Query a user by id.
+   */
   getUserInfo(id){
     var db = FbApp.database().ref('registeredUsers/');
     var user
@@ -91,9 +103,6 @@ constructor(public afAuth: AngularFireAuth) {
   }
    /**
    * Logs the user in using their Email/Password combo
-   * @param email
-   * @param password
-   * @returns {firebase.Promise<FirebaseAuthState>}
    */
   loginWithEmail(email, password) {
     
