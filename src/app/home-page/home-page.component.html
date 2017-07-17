@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+        home-page works!
+      </h1>
+      <table class="table">
+      	<thead>
+      		<th>Name</th>
+      		<th>Last name</th>
+      		<th>Age</th>
+      		<th>Gender</th>
+      		<th></th>
+      		<th></th>
+      	</thead>
+      	<tbody>
+      		<tr *ngFor="let user of users">
+      			<td>{{user.child('name').val()}}</td>
+      			<td>{{user.child('lastName').val()}}</td>
+      			<td>{{user.child('age').val()}}</td>
+      			<td>{{user.child('gender').val()}}</td>
+      			<td><button  class=" btn btn-warning" (click)="edit(user.key)">Edit</button></td>
+      			<td><button  class=" btn btn-danger" (click)="delete(user.key)">Delete</button></td>
+      		</tr>
+      	</tbody>
+      </table>
+    </div>
+  </div>
+</div>
